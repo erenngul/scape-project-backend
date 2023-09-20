@@ -57,4 +57,12 @@ app.get("/turkcell/:brand/:pageIndex", (req, res) => {
     getHtml(req, res, "turkcell", parseInt(req.params.pageIndex));
 });
 
-app.listen(5000, () => console.log("Server started on port 5000"));
+// Use PORT provided in environment or default to 3000
+const port = process.env.PORT || 3000;
+
+// Listen on `port` and 0.0.0.0
+app.listen(port, "0.0.0.0", function () {
+  // ...
+});
+
+// app.listen(5000, () => console.log("Server started on port 5000"));

@@ -2,11 +2,11 @@ const puppeteer = require('puppeteer');
 const express = require('express');
 
 const app = express();
-const port = process.env.PORT || 3001;
+const PORT = process.env.PORT || 4000;
 
 async function getHtml(req, res, path = '', pageIndex) {
+    const browser = await puppeteer.launch({ headless: 'new' });
     try {
-        const browser = await puppeteer.launch({ headless: 'new' });
         const page = await browser.newPage();
 
         let complaintList = [];
@@ -32,9 +32,8 @@ async function getHtml(req, res, path = '', pageIndex) {
         complaintList = complaintList.flat();
         console.log(complaintList);
         res.json(complaintList);
-        await browser.close();
-    }
-    catch (err) {
+    } catch (err) {
+        console.error(err);
         res.json([{
             title: "Hata:",
             username: "",
@@ -42,6 +41,8 @@ async function getHtml(req, res, path = '', pageIndex) {
             description: "Sayfa yüklenemedi.",
             link: ""
         }]);
+    } finally {
+        await browser.close();
     }
 }
 
@@ -58,4 +59,4 @@ app.get("/turkcell/:brand/:pageIndex", (req, res) => {
     getHtml(req, res, "turkcell", parseInt(req.params.pageIndex));
 });
 
-app.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer');
 const express = require('express');
 
 const app = express();
+const port = process.env.PORT || 3001;
 
 async function getHtml(req, res, path = '', pageIndex) {
     try {
@@ -57,4 +58,4 @@ app.get("/turkcell/:brand/:pageIndex", (req, res) => {
     getHtml(req, res, "turkcell", parseInt(req.params.pageIndex));
 });
 
-app.listen(5000, () => console.log("Server started on port 5000"));
+app.listen(port, () => console.log(`Server started on port ${port}`));

@@ -1,8 +1,10 @@
-const puppeteer = require('puppeteer');
-require("dotenv").config();
 const express = require('express');
+const cors = require('cors');
+const puppeteer = require('puppeteer');
+require('dotenv').config();
 
 const app = express();
+app.use(cors());
 const PORT = process.env.PORT || 4000;
 
 async function getHtml(req, res, path = '', pageIndex) {

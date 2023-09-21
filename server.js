@@ -46,6 +46,10 @@ async function getHtml(req, res, path = '', pageIndex) {
     }
 }
 
+app.get("/", (req, res) => {
+    res.send("Turkcell Şikayet Merkezi API")
+})
+
 app.get("/:brand/:pageIndex", (req, res) => {
     if (req.params.brand === "game") {
         getHtml(req, res, "game", parseInt(req.params.pageIndex));
